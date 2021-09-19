@@ -9,7 +9,7 @@ import { DbConfigService } from '../../../config/database/configuration.service'
       imports: [DbConfigModule],
       inject: [DbConfigService],
       useFactory: (dbConfigService: DbConfigService) => ({
-        uri: dbConfigService.uri
+        uri: dbConfigService.uri,
       }),
     }),
   ],
