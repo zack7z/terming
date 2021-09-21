@@ -7,18 +7,23 @@ import {
 import { AppModule } from './app.module';
 import { AppConfigService } from './config/app/configuration.service';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { VersioningType } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { MongoExceptionFilter } from './common/exceptions/mongo-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const appConfig: AppConfigService = app.get(AppConfigService);
 
   app.enableCors();
+
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   app.enableVersioning({
     type: VersioningType.URI,
     prefix: 'api/v',
   });
+
+  app.useGlobalFilters(new MongoExceptionFilter());
+  app.useGlobalPipes(new ValidationPipe());
 
   initSwagger(app);
 
