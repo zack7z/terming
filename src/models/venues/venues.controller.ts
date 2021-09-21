@@ -12,7 +12,7 @@ import { Venue } from './schema/venue.schema';
 import { GeoLocationPipe } from '../../common/pipes/mongodb/geo-location.pipe';
 import { UpdateVenueDto } from './dto/update-venue.dto';
 import { GetId } from '../../common/decorators/requests/get-id.decorator';
-import {ApiOkResponse, ApiTags} from '@nestjs/swagger';
+import {ApiOkResponse, ApiParam, ApiQuery, ApiTags} from '@nestjs/swagger';
 import { ItemNotFoundInterceptor } from '../../common/interceptors/item-not-found.interceptor';
 import {PaginationModel, ApiPaginationModel} from "../../common/responses/pagination.model";
 import { GetPaginationInfo } from "../../common/decorators/requests/get-pagination-info.decorator";
@@ -28,12 +28,14 @@ export class VenuesController {
   constructor(readonly venueService: VenuesService) {}
 
   @Get()
+  @ApiQuery({ name: 'page', required: false })
   @ApiOkResponse({ type: ApiPaginationModel })
   async all(@GetPaginationInfo() paginationInfo: PaginationInfo): Promise<PaginationModel<Venue>> {
     return await this.venueService.all(paginationInfo);
   }
 
   @Get(':id')
+  @ApiParam({ name: 'id' })
   async show(@GetId() id: string): Promise<Venue> {
     return await this.venueService.show(id);
   }
@@ -46,6 +48,7 @@ export class VenuesController {
   }
 
   @Patch(':id')
+  @ApiParam({ name: 'id' })
   async update(
     @GetId() id: string,
     @Body(GeoLocationPipe) updateVenueDto: UpdateVenueDto,
@@ -54,6 +57,7 @@ export class VenuesController {
   }
 
   @Delete(':id')
+  @ApiParam({ name: 'id' })
   async delete(@GetId() id: string): Promise<Venue> {
     return await this.venueService.delete(id);
   }
