@@ -1,10 +1,9 @@
-import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, raw, Schema } from '@nestjs/mongoose';
 import { Document, Schema as mongooseSchema } from 'mongoose';
 import { DatabaseConstants } from '../../../common/constants/database';
 import { GeoPoint } from '../../../common/interfaces/mongodb/geo-point.interface';
 import { ApiProperty } from '@nestjs/swagger';
-import { MongoosePaginatePlugin } from '../../../common/helpers/mongoose-pagination-plugin';
-
+import { CreateSchema } from '../../../common/helpers/mongoose.-schema-factory.helper';
 export type VenueDocument = Venue & Document;
 
 @Schema()
@@ -26,6 +25,7 @@ export class Venue {
 
   @Prop(
     raw({
+      _id: false,
       required: false,
       type: new mongooseSchema(DatabaseConstants.MONGOOSE_POINT_SCHEMA),
     }),
@@ -37,7 +37,4 @@ export class Venue {
   location: GeoPoint;
 }
 
-export const VenueSchema = SchemaFactory.createForClass(Venue).plugin(
-  MongoosePaginatePlugin,
-  { limit: 10 },
-);
+export const VenueSchema = CreateSchema(Venue);

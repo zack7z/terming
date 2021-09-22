@@ -1,11 +1,13 @@
-import { DatabaseConstants } from "../constants/database";
-import * as Url from "url";
+import { DatabaseConstants } from '../constants/database';
+import * as Url from 'url';
 
 export const MongoosePaginatePlugin = (schema, options) => {
   options = options || {};
-  schema.query.paginate = async function (params) {
-    const paginationInfo = params.paginationInfo;
-    const limit =  parseInt(paginationInfo.limit) || options.limit || DatabaseConstants.PAGINATE_LIMIT_DEFAULT;
+  schema.query.paginate = async function (paginationInfo) {
+    const limit =
+      parseInt(paginationInfo.limit) ||
+      options.limit ||
+      DatabaseConstants.PAGINATE_LIMIT_DEFAULT;
     const pagination = {
       currentPage: 1,
       perPage: limit,
@@ -21,11 +23,11 @@ export const MongoosePaginatePlugin = (schema, options) => {
       this.limit(limit).skip(offset),
       this.model.countDocuments(this.getQuery()),
     ]);
-    pagination.totalPage = Math.ceil(count / limit)
+    pagination.totalPage = Math.ceil(count / limit);
 
     // set next and prev url
     if (paginationInfo.url) {
-      let url = new URL(paginationInfo.url)
+      const url = new URL(paginationInfo.url);
       if (pagination.currentPage < pagination.totalPage) {
         url.searchParams.set('page', String(pagination.currentPage + 1));
         pagination.nextLink = url.toString();

@@ -4,18 +4,19 @@ import { Venue, VenueDocument } from './schema/venue.schema';
 import { Model } from 'mongoose';
 import { CreateVenueDto } from './dto/create-venue.dto';
 import { UpdateVenueDto } from './dto/update-venue.dto';
-import { PaginationModel } from "../../common/responses/pagination.model";
-import { PaginationInfo } from "../../common/interfaces/pagination-info.interface";
+import { PaginationModel } from '../../common/responses/pagination.model';
+import { PaginationInfo } from '../../common/interfaces/mongodb/pagination-info.interface';
+import { BaseStaticModel } from '../../common/interfaces/mongodb/base-static-model.interface';
 
 @Injectable()
 export class VenuesService {
   constructor(
-    @InjectModel(Venue.name) private readonly venueModel: Model<VenueDocument>,
+    @InjectModel(Venue.name)
+    private readonly venueModel: Model<VenueDocument, BaseStaticModel<Venue>>,
   ) {}
 
   async all(paginationInfo: PaginationInfo): Promise<PaginationModel<Venue>> {
-    // @ts-ignore
-    return this.venueModel.find().paginate({ paginationInfo: paginationInfo });
+    return this.venueModel.find().paginate(paginationInfo);
   }
 
   async show(id: string) {
@@ -28,7 +29,10 @@ export class VenuesService {
   }
 
   async update(id: string, updateVenueDto: UpdateVenueDto): Promise<Venue> {
-    return this.venueModel.findByIdAndUpdate(id, updateVenueDto, { new: true });
+    return this.venueModel.findByIdAndUpdate(id, updateVenueDto, {
+      new: true,
+      runValidators: true,
+    });
   }
 
   async delete(id: string): Promise<Venue> {

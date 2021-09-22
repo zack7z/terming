@@ -10,6 +10,8 @@ import { DbConfigService } from '../../../config/database/configuration.service'
       inject: [DbConfigService],
       useFactory: (dbConfigService: DbConfigService) => ({
         uri: dbConfigService.uri,
+        maxPoolSize: 10,
+        keepAlive: true,
       }),
     }),
   ],

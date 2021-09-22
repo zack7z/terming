@@ -1,5 +1,5 @@
 export interface PaginationInfo {
-    url: string,
-    page: number,
-    limit?: number
+  url: string;
+  page: number;
+  limit?: number;
 }

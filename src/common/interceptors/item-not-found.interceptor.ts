@@ -4,11 +4,10 @@ import {
   ExecutionContext,
   CallHandler,
   NotFoundException,
-  BadRequestException,
 } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
 import { Request } from 'express';
-import * as mongoose from 'mongoose';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class ItemNotFoundInterceptor implements NestInterceptor {
@@ -18,7 +17,7 @@ export class ItemNotFoundInterceptor implements NestInterceptor {
     const id = request.params.id;
     const exception = new NotFoundException('item not found');
 
-    if (id && !mongoose.Types.ObjectId.isValid(id)) throw exception;
+    if (id && !Types.ObjectId.isValid(id)) throw exception;
 
     return next.handle().pipe(
       map((value) => {

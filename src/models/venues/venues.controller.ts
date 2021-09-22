@@ -1,7 +1,8 @@
 import {
   Body,
   Controller,
-  Delete, Get,
+  Delete,
+  Get,
   Patch,
   Post,
   UseInterceptors,
@@ -12,11 +13,14 @@ import { Venue } from './schema/venue.schema';
 import { GeoLocationPipe } from '../../common/pipes/mongodb/geo-location.pipe';
 import { UpdateVenueDto } from './dto/update-venue.dto';
 import { GetId } from '../../common/decorators/requests/get-id.decorator';
-import {ApiOkResponse, ApiParam, ApiQuery, ApiTags} from '@nestjs/swagger';
+import { ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ItemNotFoundInterceptor } from '../../common/interceptors/item-not-found.interceptor';
-import {PaginationModel, ApiPaginationModel} from "../../common/responses/pagination.model";
-import { GetPaginationInfo } from "../../common/decorators/requests/get-pagination-info.decorator";
-import { PaginationInfo } from "../../common/interfaces/pagination-info.interface";
+import {
+  PaginationModel,
+  ApiPaginationModel,
+} from '../../common/responses/pagination.model';
+import { GetPaginationInfo } from '../../common/decorators/requests/get-pagination-info.decorator';
+import { PaginationInfo } from '../../common/interfaces/mongodb/pagination-info.interface';
 
 @ApiTags('venues')
 @UseInterceptors(ItemNotFoundInterceptor)
@@ -30,7 +34,9 @@ export class VenuesController {
   @Get()
   @ApiQuery({ name: 'page', required: false })
   @ApiOkResponse({ type: ApiPaginationModel })
-  async all(@GetPaginationInfo() paginationInfo: PaginationInfo): Promise<PaginationModel<Venue>> {
+  async all(
+    @GetPaginationInfo() paginationInfo: PaginationInfo,
+  ): Promise<PaginationModel<Venue>> {
     return await this.venueService.all(paginationInfo);
   }
 
