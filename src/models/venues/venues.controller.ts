@@ -37,13 +37,13 @@ export class VenuesController {
   async all(
     @GetPaginationInfo() paginationInfo: PaginationInfo,
   ): Promise<PaginationModel<Venue>> {
-    return await this.venueService.all(paginationInfo);
+    return this.venueService.all(paginationInfo);
   }
 
   @Get(':id')
   @ApiParam({ name: 'id' })
   async show(@GetId() id: string): Promise<Venue> {
-    return await this.venueService.show(id);
+    return this.venueService.show(id);
   }
 
   @Post()
@@ -59,12 +59,12 @@ export class VenuesController {
     @GetId() id: string,
     @Body(GeoLocationPipe) updateVenueDto: UpdateVenueDto,
   ): Promise<Venue> {
-    return await this.venueService.update(id, updateVenueDto);
+    return this.venueService.update(id, updateVenueDto);
   }
 
   @Delete(':id')
   @ApiParam({ name: 'id' })
   async delete(@GetId() id: string): Promise<Venue> {
-    return await this.venueService.delete(id);
+    return this.venueService.delete(id);
   }
 }
