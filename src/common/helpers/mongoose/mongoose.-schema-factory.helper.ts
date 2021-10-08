@@ -1,6 +1,6 @@
 import { SchemaFactory } from '@nestjs/mongoose';
 import { MongoosePaginatePlugin } from './mongoose-pagination-plugin';
-import { DatabaseConstants } from '../constants/database';
+import { DatabaseConstants } from '../../constants/database';
 
 export function CreateSchema(schema) {
   return SchemaFactory.createForClass(schema)
