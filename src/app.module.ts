@@ -5,6 +5,7 @@ import { AppConfigModule } from './config/app/configuration.module';
 import { LoggerProviderModule } from './providers/logger/provider.module';
 import { MongooseProviderModule } from './providers/database/mongoose/provider.module';
 import { VenuesModule } from './models/venues/venues.module';
+import { CourseCategoriesModule } from './models/course-categories/course-categories.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { VenuesModule } from './models/venues/venues.module';
     LoggerProviderModule,
     MongooseProviderModule,
     VenuesModule,
+    CourseCategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

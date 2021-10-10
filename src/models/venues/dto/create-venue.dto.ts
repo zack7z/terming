@@ -14,6 +14,9 @@ export class CreateVenueDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(50)
+  @ApiProperty({
+    description: 'must be unique',
+  })
   code: string;
 
   @IsOptional()

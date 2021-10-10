@@ -9,6 +9,7 @@ import { AppConfigService } from './config/app/configuration.service';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { MongoExceptionFilter } from './common/exceptions/mongo-exception.filter';
+import * as mongoose from 'mongoose';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,7 +24,13 @@ async function bootstrap() {
   });
 
   app.useGlobalFilters(new MongoExceptionFilter());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
+
+  if (process.env.NODE_ENV != 'production') mongoose.set('debug', true);
 
   initSwagger(app);
 

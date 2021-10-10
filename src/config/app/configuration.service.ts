@@ -12,9 +12,6 @@ export class AppConfigService {
   get name(): string {
     return this.configService.get<string>('app.name');
   }
-  get env(): string {
-    return this.configService.get<string>('app.env');
-  }
   get url(): string {
     return this.configService.get<string>('app.url');
   }
