@@ -1,5 +1,10 @@
-import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
-import { IsMongoObjectId } from '../../../common/decorators/validations/is-mongo-object-id.validation';
+import {
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 import { Schema } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -11,6 +16,6 @@ export class CreateCourseCategoryDto {
 
   @ApiProperty({ type: String })
   @IsOptional()
-  @IsMongoObjectId()
+  @IsMongoId()
   parentId?: Schema.Types.ObjectId;
 }

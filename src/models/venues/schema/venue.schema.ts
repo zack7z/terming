@@ -4,6 +4,7 @@ import { DatabaseConstants } from '../../../common/constants/database';
 import { GeoPoint } from '../../../common/interfaces/mongodb/geo-point.interface';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { CreateSchema } from '../../../common/helpers/mongoose/mongoose.-schema-factory.helper';
+
 export type VenueDocument = Venue & Document;
 
 @Schema()
