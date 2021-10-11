@@ -22,7 +22,6 @@ async function bootstrap() {
     type: VersioningType.URI,
     prefix: 'api/v',
   });
-
   app.useGlobalFilters(new MongoExceptionFilter());
   app.useGlobalPipes(
     new ValidationPipe({

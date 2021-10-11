@@ -58,7 +58,7 @@ export class CourseCategoriesController {
   @ApiParam({ name: 'id' })
   async update(
     @GetId() id: string,
-    @Body(GeoLocationPipe) updateCourseCategoryDto: UpdateCourseCategoryDto,
+    @Body() updateCourseCategoryDto: UpdateCourseCategoryDto,
   ): Promise<CourseCategory> {
     return this.courseCategoriesService.update(id, updateCourseCategoryDto);
   }
